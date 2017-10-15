@@ -1,0 +1,197 @@
+﻿$base: 100!default;
+@function rem($size) {
+    @return ($size/$base)*1rem;
+}
+
+ul,
+li {
+    padding: 0;
+    margin: 0;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+}
+
+.fadeInTop-enter-active,
+.fadeInTop-leave-active {
+    transition: transform 0.35s, opacity 0.35s;
+    transform: translateY(0);
+}
+
+.fadeInTop-enter,
+.fadeInTop-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+$datepicker-day-height: 60;
+$datepicker-day-row: 7;
+$datepicker-month-row:4;
+$datepicker-year-row: 5;
+$datepicker-selected-color: #fbc042;
+$datepicker-selected-bgcolor: #fed287;
+$datepicker-border-color: #eaeaea;
+.datepicker {
+    background-color: #fff;
+    * {
+        box-sizing: content-box;
+    }
+    .datepicker-mask {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #f0f0f0;
+        opacity: 0.5;
+        z-index: 999;
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
+    .datepicker-content {
+        background-color: #fff;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    .datepicker-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: rem(80);
+        background-color: #f0f0f0;
+        position: relative;
+        >span {
+            display: inline-block;
+            height: rem(60);
+            min-width: rem(100);
+            line-height: rem(60);
+            text-align: center;
+        }
+        .button-cancel {
+            position: absolute;
+            left: rem(10);
+            top: rem(10);
+        }
+        .button-select {
+            background-color: $datepicker-selected-color;
+            color: #fff;
+            margin-right: rem(10);
+        }
+    }
+    .selected-date {
+        position: relative;
+        text-align: center;
+        line-height: rem(80);
+        font-size: rem(30);
+        color: #333;
+        padding: rem(10);
+        .date {
+            >span {
+                display: inline-block;
+                &.active {
+                    border-bottom: solid $datepicker-selected-bgcolor 2px;
+                }
+                line-height: rem(60);
+                padding-left: rem(10);
+                padding-right: rem(10);
+            }
+        }
+        .button-prev,
+        .button-next {
+            display: inline-block;
+            position: absolute;
+            top: rem(15);
+            padding: 0 rem(20);
+            font-size: rem(40);
+        }
+        .button-prev {
+            left: rem(10);
+        }
+        .button-next {
+            right: rem(10);
+        }
+    }
+    .datepicker-items {
+        display: flex;
+        flex-direction: row;
+        height: rem($datepicker-day-height*$datepicker-day-row);
+        width: 100%;
+        overflow: hidden;
+        border-top: solid 1px #ccc; //transition: transform 0.15s;
+        //opacity: 1;
+        &.changing {
+            animation: fadeInOut 0.35s;
+        }
+        margin-bottom: rem(10);
+    }
+    @keyframes fadeInOut {
+        0% {
+            opacity: 1;
+        }
+        25% {
+            opacity: 0;
+        }
+        50% {
+            opacity: 0;
+        }
+        75% {
+            opacity: 1;
+        }
+    }
+    .years,
+    .months,
+    .days {
+        width: 100%;
+        overflow-y: hidden;
+        text-align: center;
+        font-size: rem(28);
+        color: #666;
+        /*&.active {
+            transition: transform cubic-bezier(0.19, 1, 0.22, 1) 1s;
+        }*/
+        .item {
+            display: inline-block; // border-top: solid 1px $datepicker-border-color;
+            color: #333;
+            &.prev,
+            &.next {
+                color: #999;
+            }
+            &.active {
+                background-color: $datepicker-selected-bgcolor;
+                color: #fff;
+            }
+        }
+    }
+    .years {
+        .item {
+            //line-height: rem(80);
+            line-height: rem( $datepicker-day-height*$datepicker-day-row/$datepicker-year-row);
+            width: 25%;
+        }
+    }
+    .months {
+        .item {
+            line-height: rem( $datepicker-day-height*$datepicker-day-row/$datepicker-month-row); // line-height: rem(100);
+            width: 33.33%;
+        }
+    }
+    .days {
+        .week {
+            color: #333;
+            display: inline-block;
+            width: (100/7)*1%;
+            line-height: rem(60);
+        }
+        .item {
+            line-height: rem(60);
+            width: (100/7)*1%;
+        }
+    }
+}
